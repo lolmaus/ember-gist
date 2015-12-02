@@ -1,0 +1,37 @@
+{{#if session.isOpening}}
+  <div class="">
+    Logging in...
+  </div>
+{{else if session.isAuthenticated}}
+  <div class="logInOut-authenticated">
+    <div class="">
+      <img src="{{session.currentUser.avatarUrl32}}" />
+    </div>
+
+    <div class="">
+      <div class="">
+        {{session.currentUser.login}}
+      </div>
+
+      <div class="">
+        <a
+          href
+          {{action attrs.signOut}}
+          class=""
+        >
+          Log out
+        </a>
+      </div>
+    </div>
+  </div>{{!/logInOut-authenticated}}
+{{else}}
+  <div class="">
+    <a
+      href
+      {{action attrs.signInViaGithub}}
+      class="n"
+    >
+      Log in with GitHub
+    </a>
+  </div>
+{{/if}}

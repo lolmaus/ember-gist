@@ -1,0 +1,82 @@
+{{#if session.isAuthenticated}}
+  <div>
+    Gist id:
+    {{input value=config.gistId}}
+
+    <button
+      {{action 'fetch'}}
+    >Fetch</button>
+
+    <a
+      href="https://gist.github.com/{{config.gistId}}"
+      target="_blank"
+    >Open on GitHub</a>
+  </div>
+
+  <div style="display: flex;">
+    <div style="width: 300px; margin-right: 50px;">
+      <h2>Parents</h2>
+
+      <ul>
+        {{#each model.parents as |parent|}}
+          <li>
+            <div>Parent id: {{parent.id}}</div>
+            <div>
+              Children:
+              {{#if parent.children.length}}
+                {{#each parent.children as |child|}}
+                  {{child.id}}
+                {{/each}}
+              {{else}}
+                none
+              {{/if}}
+
+              {{power-select-blockless
+                options=childIds
+                selected=parent.childIds
+                multiple=true
+                onchange=(action 'selectChildren' parent)
+              }}
+
+              <button
+                {{action 'saveParent' parent}}
+              >Save</button>
+            </div>
+            <br>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div style="width: 300px;">
+      <h2>Children</h2>
+
+      <ul>
+        {{#each model.children as |child|}}
+          <li>
+            <div>Child id: {{parent.id}}</div>
+            <div>
+              Parent:
+              {{#if child.parent}}
+                {{child.parent.id}}
+              {{else}}
+                none
+              {{/if}}
+
+              {{power-select-blockless
+                options=parentIds
+                selected=child.parent.id
+                onchange=(action 'selectParent' child)
+              }}
+
+              <button
+                {{action 'saveChild' child}}
+              >Save</button>
+            </div>
+            <br>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+{{/if}}

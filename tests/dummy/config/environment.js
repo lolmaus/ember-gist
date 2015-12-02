@@ -16,7 +16,19 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
+
+    githubOauthUrl: 'https://ember-gist-gk-dev-public.herokuapp.com/authenticate/',
+
+    torii: {
+      sessionServiceName: 'session',
+      providers: {
+        'github-oauth2': {
+          scope: 'user, gist',
+          apiKey: '6649b5c6268a40b1cd3c'
+        }
+      }
+    },
   };
 
   if (environment === 'development') {
